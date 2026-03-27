@@ -3,6 +3,8 @@
 A Symfony bundle for **Akeneo PIM Community Edition** that allows you to mark attribute groups as read-only, preventing users from editing any attribute values belonging to those groups on the
 product edit form.
 
+![attribute group read-only](https://github.com/user-attachments/assets/7753c3ce-b906-43aa-b1c9-0ec22f894fc4)
+
 ---
 
 ## Features
