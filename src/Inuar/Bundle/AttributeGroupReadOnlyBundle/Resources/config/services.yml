@@ -1,0 +1,46 @@
+services:
+    # --- Persistence ---
+
+    inuar_attribute_group_readonly.persistence.get_readonly_codes:
+        class: Inuar\Bundle\AttributeGroupReadOnlyBundle\Infrastructure\Persistence\GetReadOnlyAttributeGroupCodesQuery
+        arguments:
+            - '@database_connection'
+
+    inuar_attribute_group_readonly.persistence.save_status:
+        class: Inuar\Bundle\AttributeGroupReadOnlyBundle\Infrastructure\Persistence\SaveReadOnlyAttributeGroupStatus
+        arguments:
+            - '@database_connection'
+
+    # --- Controller ---
+
+    inuar_attribute_group_readonly.controller.readonly_attribute_group:
+        class: Inuar\Bundle\AttributeGroupReadOnlyBundle\Infrastructure\Controller\ReadOnlyAttributeGroupController
+        public: true
+        arguments:
+            - '@inuar_attribute_group_readonly.persistence.get_readonly_codes'
+            - '@inuar_attribute_group_readonly.persistence.save_status'
+
+    # --- Event subscribers ---
+
+    inuar_attribute_group_readonly.subscriber.cleanup:
+        class: Inuar\Bundle\AttributeGroupReadOnlyBundle\Infrastructure\Subscriber\CleanupReadOnlyAttributeGroupSubscriber
+        arguments:
+            - '@inuar_attribute_group_readonly.persistence.save_status'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    inuar_attribute_group_readonly.install.init_table:
+        class: Inuar\Bundle\AttributeGroupReadOnlyBundle\Infrastructure\Install\InitReadOnlyAttributeGroupTableSubscriber
+        arguments:
+            - '@database_connection'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    # --- Product updater decorator ---
+
+    inuar_attribute_group_readonly.updater.product_decorator:
+        class: Inuar\Bundle\AttributeGroupReadOnlyBundle\Updater\ReadOnlyAttributeGroupProductUpdaterDecorator
+        decorates: pim_catalog.updater.product
+        arguments:
+            - '@.inner'
+            - '@inuar_attribute_group_readonly.persistence.get_readonly_codes'

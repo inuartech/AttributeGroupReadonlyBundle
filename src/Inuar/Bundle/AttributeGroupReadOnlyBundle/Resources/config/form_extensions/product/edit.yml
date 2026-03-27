@@ -1,0 +1,10 @@
+extensions:
+    inuar-attribute-group-readonly-product-edit-form:
+        module: inuar/attribute-group-readonly/product/form/attributes/read-only-attribute-group
+        parent: pim-product-edit-form-attributes
+        position: 105
+
+    inuar-attribute-group-readonly-product-model-edit-form:
+        module: inuar/attribute-group-readonly/product/form/attributes/read-only-attribute-group
+        parent: pim-product-model-edit-form-attributes
+        position: 105

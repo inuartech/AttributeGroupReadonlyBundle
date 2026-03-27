@@ -1,0 +1,17 @@
+extensions:
+    inuar-attribute-group-readonly-section:
+        module: pim/common/simple-view
+        parent: pim-attribute-group-edit-form-properties
+        targetZone: accordion
+        position: 115
+        config:
+            template: pim/template/form/tab/section
+            templateParams:
+                sectionTitle: inuar_attribute_group_readonly.attribute_group.readonly.section_title
+                dropZone: content
+
+    inuar-attribute-group-readonly-toggle:
+        module: inuar/attribute-group-readonly/attribute-group/readonly-toggle
+        parent: inuar-attribute-group-readonly-section
+        targetZone: content
+        position: 100

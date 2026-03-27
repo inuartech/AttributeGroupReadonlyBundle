@@ -1,0 +1,30 @@
+{
+  "name": "inuar/attribute-group-readonly-bundle",
+  "description": "Akeneo PIM bundle to flag attribute groups as read-only on the product edit form.",
+  "authors": [
+    {
+      "name": "Nei Santos",
+      "email": "nei@inuartech.com"
+    }
+  ],
+  "keywords": [
+    "akeneo"
+  ],
+  "type": "symfony-bundle",
+  "license": "proprietary",
+  "require": {
+    "php": ">=8.1",
+    "symfony/framework-bundle": "^6.0",
+    "doctrine/dbal": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Inuar\\Bundle\\AttributeGroupReadOnlyBundle\\": ""
+    }
+  },
+  "extra": {
+    "symfony": {
+      "require": "^6.0"
+    }
+  }
+}

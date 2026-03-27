@@ -1,0 +1,17 @@
+inuar_attribute_group_readonly_get:
+    path: /inuar/attribute-group-readonly/{code}
+    defaults:
+        _controller: inuar_attribute_group_readonly.controller.readonly_attribute_group:getAction
+    methods: [GET]
+
+inuar_attribute_group_readonly_list:
+    path: /inuar/attribute-group-readonly
+    defaults:
+        _controller: inuar_attribute_group_readonly.controller.readonly_attribute_group:listAction
+    methods: [GET]
+
+inuar_attribute_group_readonly_save:
+    path: /inuar/attribute-group-readonly
+    defaults:
+        _controller: inuar_attribute_group_readonly.controller.readonly_attribute_group:saveAction
+    methods: [POST]

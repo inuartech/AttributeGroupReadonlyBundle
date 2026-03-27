@@ -1,0 +1,4 @@
+config:
+    paths:
+        inuar/attribute-group-readonly/product/form/attributes/read-only-attribute-group: inuarattributegroupreadonly/js/product/form/attributes/read-only-attribute-group
+        inuar/attribute-group-readonly/attribute-group/readonly-toggle: inuarattributegroupreadonly/js/attribute-group/readonly-toggle

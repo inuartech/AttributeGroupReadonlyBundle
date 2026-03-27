@@ -1,0 +1,6 @@
+inuar_attribute_group_readonly:
+    attribute_group:
+        readonly:
+            section_title: "Read-only attributes"
+            label: "Enable read-only"
+            helper: "When enabled, all attributes in this group will be locked for editing on the product page."
