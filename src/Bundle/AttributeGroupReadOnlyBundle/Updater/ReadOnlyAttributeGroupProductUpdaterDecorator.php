@@ -10,7 +10,7 @@ use Akeneo\Tool\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 class ReadOnlyAttributeGroupProductUpdaterDecorator implements ObjectUpdaterInterface
 {
     /** @var string[]|null */
-    private ?array $readOnlyAttributeCodes = null;
+    private ?array $apiProtectedAttributeCodes = null;
 
     public function __construct(
         private readonly ObjectUpdaterInterface $inner,
@@ -21,7 +21,7 @@ class ReadOnlyAttributeGroupProductUpdaterDecorator implements ObjectUpdaterInte
     public function update($object, array $data, array $options = []): static
     {
         if (isset($data['values'])) {
-            $data['values'] = $this->filterReadOnlyValues($data['values']);
+            $data['values'] = $this->filterProtectedValues($data['values']);
         }
 
         $this->inner->update($object, $data, $options);
@@ -29,24 +29,24 @@ class ReadOnlyAttributeGroupProductUpdaterDecorator implements ObjectUpdaterInte
         return $this;
     }
 
-    private function filterReadOnlyValues(array $values): array
+    private function filterProtectedValues(array $values): array
     {
-        $readOnlyCodes = $this->getReadOnlyAttributeCodes();
+        $protectedCodes = $this->getApiProtectedAttributeCodes();
 
-        if (empty($readOnlyCodes)) {
+        if (empty($protectedCodes)) {
             return $values;
         }
 
-        return array_diff_key($values, array_flip($readOnlyCodes));
+        return array_diff_key($values, array_flip($protectedCodes));
     }
 
     /** @return string[] */
-    private function getReadOnlyAttributeCodes(): array
+    private function getApiProtectedAttributeCodes(): array
     {
-        if ($this->readOnlyAttributeCodes === null) {
-            $this->readOnlyAttributeCodes = $this->query->getReadOnlyAttributeCodes();
+        if ($this->apiProtectedAttributeCodes === null) {
+            $this->apiProtectedAttributeCodes = $this->query->getApiProtectedAttributeCodes();
         }
 
-        return $this->readOnlyAttributeCodes;
+        return $this->apiProtectedAttributeCodes;
     }
 }
