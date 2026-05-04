@@ -13,33 +13,33 @@ use Symfony\Component\HttpFoundation\Response;
 class ReadOnlyAttributeGroupController
 {
     public function __construct(
-        private readonly GetReadOnlyAttributeGroupCodesQuery $getReadOnlyCodes,
+        private readonly GetReadOnlyAttributeGroupCodesQuery $getQuery,
         private readonly SaveReadOnlyAttributeGroupStatus $saveStatus,
     ) {
     }
 
     public function getAction(string $code): JsonResponse
     {
-        return new JsonResponse([
-            'is_read_only' => $this->getReadOnlyCodes->isReadOnly($code),
-        ]);
+        return new JsonResponse($this->getQuery->getStatus($code));
     }
 
     public function listAction(): JsonResponse
     {
-        return new JsonResponse($this->getReadOnlyCodes->execute());
+        return new JsonResponse($this->getQuery->getFrontendReadOnlyGroupCodes());
     }
 
     public function saveAction(Request $request): Response
     {
         $code = $request->request->get('attribute_group_code');
-        $isReadOnly = $request->request->getBoolean('is_read_only');
 
         if (empty($code)) {
             return new Response(null, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $this->saveStatus->save($code, $isReadOnly);
+        $frontendReadOnly = $request->request->getBoolean('frontend_readonly');
+        $apiEditable      = $request->request->getBoolean('api_editable', true);
+
+        $this->saveStatus->save($code, $frontendReadOnly, $apiEditable);
 
         return new Response(null, Response::HTTP_NO_CONTENT);
     }
